@@ -8,13 +8,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
-
 export function AdminAddProduct() {
   const [name, setName] = useState("")
   const [price, setPrice] = useState<number | "">("")
   const [imageUrl, setImageUrl] = useState("")
   const [submitting, setSubmitting] = useState(false)
   const router = useRouter()
+
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -24,17 +24,18 @@ export function AdminAddProduct() {
       const res = await fetch("/api/products", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ name, price: Number(price), imageUrl }),
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error(data?.error || "Failed to add product")
-      toast.success("product-added")
+      toast.success("Product added");
       setName("")
       setPrice("")
       setImageUrl("")
       router.refresh()
     } catch (err: any) {
-      toast.error(err.message || "Please try again.")
+      toast.error(err.message)
     } finally {
       setSubmitting(false)
     }

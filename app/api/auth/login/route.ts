@@ -16,7 +16,14 @@ export async function POST(req: NextRequest) {
   }
 
   const res = NextResponse.json({ ok: true, user: { email: match.email, role: match.role } })
-  res.cookies.set("email", match.email, { httpOnly: true, sameSite: "lax", path: "/" })
-  res.cookies.set("role", match.role, { httpOnly: true, sameSite: "lax", path: "/" })
+  const cookieOptions = {
+    httpOnly: true,
+    sameSite: "lax" as const,
+    path: "/",
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 60 * 60 * 24 * 7, // 7 days
+  }
+  res.cookies.set("email", match.email, cookieOptions)
+  res.cookies.set("role", match.role, cookieOptions)
   return res
 }

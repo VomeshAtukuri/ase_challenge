@@ -7,35 +7,41 @@ let products: Product[] = [
     id: "p1",
     name: "Classic Tee",
     price: 24.0,
+    description: "A classic tee for everyday wear.",
     imageUrl: "/classic-tee.jpg",
   },
   {
     id: "p2",
     name: "Comfort Hoodie",
     price: 49.0,
+    description: "A cozy hoodie for cooler days.",
     imageUrl: "/comfort-hoodie.jpg",
   },
   {
     id: "p3",
     name: "Everyday Jeans",
+    description: "Stylish and durable jeans for daily use.",
     price: 59.0,
     imageUrl: "/everyday-jeans.jpg",
   },
   {
     id: "p4",
     name: "Running Sneakers",
+    description: "Lightweight sneakers designed for running.",
     price: 79.0,
     imageUrl: "/running-sneakers.jpg",
   },
   {
     id: "p5",
     name: "Canvas Tote",
+    description: "A versatile tote bag for all occasions.",
     price: 19.0,
     imageUrl: "/canvas-tote.jpg",
   },
   {
     id: "p6",
     name: "Baseball Cap",
+    description: "A stylish cap to complete your look.",
     price: 15.0,
     imageUrl: "/baseball-cap.jpg",
   },
@@ -46,14 +52,15 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
-  const role = cookies().get("role")?.value
+  const role = (await cookies()).get("role")?.value
   if (role !== "admin") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
-  const { name, price, imageUrl } = (await req.json().catch(() => ({}))) as {
+  const { name, price, imageUrl , description } = (await req.json().catch(() => ({}))) as {
     name?: string
     price?: number
     imageUrl?: string
+    description?: string
   }
   if (!name || typeof price !== "number") {
     return NextResponse.json({ error: "Invalid payload" }, { status: 400 })
@@ -62,6 +69,7 @@ export async function POST(req: NextRequest) {
     id: `p${Date.now()}`,
     name,
     price,
+    description,
     imageUrl: imageUrl || "/placeholder.jpg",
   }
   products = [newProduct, ...products]

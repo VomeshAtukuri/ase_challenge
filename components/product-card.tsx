@@ -17,13 +17,17 @@ export function ProductCard({ product }: { product: Product }) {
       </CardHeader>
       <CardContent className="flex flex-col items-center gap-3">
         <Image
-          src={product.imageUrl || "/placeholder.svg"}
+          // src={product.imageUrl || "/placeholder.svg"}
+          src={"/placeholder.svg"}
           alt={product.name}
           width={300}
           height={200}
           className="h-40 w-full rounded-md object-cover"
         />
+        <span className="flex items-center justify-between w-full">
+        <p className="text-center text-sm text-muted-foreground">{product.description}</p>
         <div className="text-sm text-muted-foreground">{formatCurrency(product.price)}</div>
+        </span>
       </CardContent>
       <CardFooter>
         <Button className="w-full" onClick={() => addItem(product, 1)}>

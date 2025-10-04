@@ -19,12 +19,21 @@ async function getProducts(): Promise<Product[]> {
 
 export default async function HomePage() {
   const products = await getProducts()
-  const user = getUser()
+  const user =  await getUser()
   const isAdmin = user?.role === "admin"
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-6">
       <h1 className="mb-4 text-2xl font-semibold text-pretty">Products</h1>
+
+      {user && (
+        <section className="mb-4 rounded-md border bg-card p-4 text-sm">
+          <div>
+            <span className="font-medium">Signed in as:</span> {user.email}
+          </div>
+          <div className="text-muted-foreground">Role: {user.role}</div>
+        </section>
+      )}
 
       {isAdmin && (
         <section className="mb-6">

@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button"
 
 async function logoutAction() {
   "use server"
-  await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ""}/api/auth/logout`, { method: "POST", cache: "no-store" })
+  await fetch("/api/auth/logout", { method: "POST", cache: "no-store" })
 }
 
 export default async function LoginPage() {
-  const user = getUser()
+  const user = await getUser()
 
   return (
-    <main className="mx-auto max-w-md px-4 py-8">
+    <main className="mx-auto px-4 py-8  h-[80vh] items-center justify-center flex flex-col">
       <h1 className="mb-4 text-2xl font-semibold text-pretty">Login</h1>
 
       {user ? (

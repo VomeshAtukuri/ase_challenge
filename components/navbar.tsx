@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import useSWR from "swr"
+import useSWR, { mutate } from "swr"
 import { useRouter } from "next/navigation"
 import { useCart } from "@/context/cart-context"
 import { Button } from "@/components/ui/button"
@@ -17,6 +17,8 @@ export function Navbar() {
 
   const onLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" })
+    mutate("/api/auth/me")
+    router.push("/login")
     router.refresh()
   }
 
@@ -26,16 +28,14 @@ export function Navbar() {
         <Link href="/" className="font-semibold">
           <span className="text-balance">Minimal Shop</span>
         </Link>
-
         <div className="flex items-center gap-3">
-          <Link href="/" className="text-sm hover:underline">
-            Products
-          </Link>
           {user ? (
             <>
-              <span className="text-xs text-muted-foreground">
-                {user.email} {user.role === "admin" ? "(Admin)" : ""}
-              </span>
+              {user.role === "admin" && (
+                <Link href="/admin" className="text-sm hover:underline">
+                  Admin
+                </Link>
+              )}
               <Button variant="ghost" size="sm" onClick={onLogout}>
                 Logout
               </Button>

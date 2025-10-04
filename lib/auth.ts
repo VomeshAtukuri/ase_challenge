@@ -8,8 +8,8 @@ export type AppUser = {
 const COOKIE_EMAIL = "email"
 const COOKIE_ROLE = "role"
 
-export function getUser(): AppUser | null {
-  const store = cookies()
+export async function getUser(): Promise<AppUser | null> {
+  const store = await cookies()
   const email = store.get(COOKIE_EMAIL)?.value
   const role = store.get(COOKIE_ROLE)?.value as AppUser["role"] | undefined
   if (!email || !role) return null
@@ -17,6 +17,6 @@ export function getUser(): AppUser | null {
   return { email, role }
 }
 
-export function isAdmin(): boolean {
-  return getUser()?.role === "admin"
+export async function isAdmin(): Promise<boolean> {
+  return (await getUser())?.role === "admin"
 }
