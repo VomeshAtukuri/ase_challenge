@@ -26,7 +26,7 @@ export function AdminAddProduct() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ name, price: Number(price), imageUrl }),
+        body: JSON.stringify({ name, price: Number(price), imageUrl , description: descriiption }),
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) throw new Error(data?.error || "Failed to add product")

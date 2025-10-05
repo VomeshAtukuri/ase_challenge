@@ -17,6 +17,7 @@ export function Navbar() {
 
   const onLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" })
+    localStorage.removeItem("shopping-cart:items")
     mutate("/api/auth/me")
     router.push("/login")
     router.refresh()

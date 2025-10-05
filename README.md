@@ -71,14 +71,10 @@ npm run dev
 
 App will be available at [http://localhost:3000](http://localhost:3000).
 
----
-
 ## 📦 API Endpoints
 
 * **GET /api/products** → Returns list of products (in-memory).
 * **POST /api/checkout** → Accepts `{ items: [{ id, qty }] }`, logs order, returns `{ success: true }`.
-
----
 
 ## 🔐 Login Credentials
 
@@ -91,8 +87,6 @@ App will be available at [http://localhost:3000](http://localhost:3000).
   * username: `user@shop.test`
   * password: `user123`
 
----
-
 ## 🚀 Deployment
 
 Easily deployable on **Vercel**:
@@ -101,13 +95,9 @@ Easily deployable on **Vercel**:
 vercel --prod
 ```
 
----
-
 ## 📹 Demo Video
 
-A short Loom recording explaining the project: [Insert Loom link here]
-
----
+A short Loom recording explaining the project: `htttps://localhost:3000`
 
 ## 📌 Future Improvements
 

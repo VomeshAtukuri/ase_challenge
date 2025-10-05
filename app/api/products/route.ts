@@ -66,13 +66,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid payload" }, { status: 400 })
   }
   const newProduct: Product = {
-    id: `p${Date.now()}`,
+    id: `p${products.length + 1}`,
     name,
     price,
     description,
     imageUrl: imageUrl || "/placeholder.jpg",
   }
-  products = [newProduct, ...products]
+  products = [...products,newProduct]
   return NextResponse.json({ ok: true, product: newProduct }, { status: 201 })
 }
 

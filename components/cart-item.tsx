@@ -13,7 +13,7 @@ export function CartItem({ line }: { line: CartLine }) {
   return (
     <div className="grid grid-cols-[80px_1fr_auto] items-center gap-4 rounded-lg border bg-card p-3 md:grid-cols-[100px_1fr_auto]">
       <Image
-        src={product.imageUrl || "/placeholder.svg"}
+        src={"/placeholder.svg"}
         alt={product.name}
         width={100}
         height={80}
