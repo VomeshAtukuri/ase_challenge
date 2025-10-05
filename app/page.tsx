@@ -1,7 +1,6 @@
 import type { Product } from "@/lib/types"
 import { ProductCard } from "@/components/product-card"
 import { getUser } from "@/lib/auth"
-import { AdminAddProduct } from "@/components/admin-add-product"
 
 async function getProducts(): Promise<Product[]> {
   try {
@@ -20,7 +19,6 @@ async function getProducts(): Promise<Product[]> {
 export default async function HomePage() {
   const products = await getProducts()
   const user =  await getUser()
-  const isAdmin = user?.role === "admin"
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-6">
@@ -35,12 +33,6 @@ export default async function HomePage() {
         </section>
       )}
 
-      {isAdmin && (
-        <section className="mb-6">
-          <AdminAddProduct />
-        </section>
-      )}
-
       {products.length === 0 ? (
         <div className="rounded-md border bg-card p-6 text-sm text-muted-foreground">
           Could not load products. Please try again later.
@@ -48,7 +40,7 @@ export default async function HomePage() {
       ) : (
         <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
           {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
+            <ProductCard key={p.id} product={p} user={user} />
           ))}
         </section>
       )}

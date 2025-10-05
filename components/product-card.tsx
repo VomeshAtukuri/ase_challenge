@@ -6,9 +6,20 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { useCart } from "@/context/cart-context"
 import type { Product } from "@/lib/types"
 import { formatCurrency } from "@/lib/format"
+import { useRouter } from "next/navigation"
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({ product, user }: { product: Product; user: { email: string; role: string } | null }) {
   const { addItem } = useCart()
+  const router = useRouter()
+
+  function handleAddToCart() {
+    if (!user) {
+      router.push("/login")
+      return
+    }
+
+    addItem(product, 1)
+  }
 
   return (
     <Card className="overflow-hidden">
@@ -30,7 +41,7 @@ export function ProductCard({ product }: { product: Product }) {
         </span>
       </CardContent>
       <CardFooter>
-        <Button className="w-full" onClick={() => addItem(product, 1)}>
+        <Button className="w-full" onClick={handleAddToCart}>
           Add to Cart
         </Button>
       </CardFooter>

@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import { cookies } from "next/headers"
 import type { Product } from "@/lib/types"
 
-let products: Product[] = [
+export let products: Product[] = [
   {
     id: "p1",
     name: "Classic Tee",
@@ -74,4 +74,22 @@ export async function POST(req: NextRequest) {
   }
   products = [newProduct, ...products]
   return NextResponse.json({ ok: true, product: newProduct }, { status: 201 })
+}
+
+
+export async function DELETE(req: NextRequest) {
+  const { searchParams } = new URL(req.url)
+  const id = searchParams.get("id")
+  console.log("Deleting product with ID:", id);
+  if (!id) {
+    return NextResponse.json({ error: "Product ID is required" }, { status: 400 });
+  }
+
+  const index = products.findIndex((p) => p.id === id);
+  if (index > -1) {
+    products.splice(index, 1);
+    return NextResponse.json({ ok: true, id });
+  }
+
+  return NextResponse.json({ error: "Product not found" }, { status: 404 });
 }

@@ -11,6 +11,7 @@ import { toast } from "sonner"
 export function AdminAddProduct() {
   const [name, setName] = useState("")
   const [price, setPrice] = useState<number | "">("")
+  const [descriiption, setDescription] = useState("")
   const [imageUrl, setImageUrl] = useState("")
   const [submitting, setSubmitting] = useState(false)
   const router = useRouter()
@@ -32,9 +33,10 @@ export function AdminAddProduct() {
       toast.success("Product added");
       setName("")
       setPrice("")
+      setDescription("")
       setImageUrl("")
       router.refresh()
-    } catch (err: any) {
+    } catch (err: string | any) {
       toast.error(err.message)
     } finally {
       setSubmitting(false)
@@ -46,7 +48,7 @@ export function AdminAddProduct() {
       <div className="text-sm font-medium">Admin Panel: Add Product</div>
       <div className="grid gap-2">
         <Label htmlFor="name">Name</Label>
-        <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+        <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" required />
       </div>
       <div className="grid gap-2">
         <Label htmlFor="price">Price</Label>
@@ -56,8 +58,18 @@ export function AdminAddProduct() {
           min="0"
           step="0.01"
           value={price}
+          placeholder="0.00"
           onChange={(e) => setPrice(e.target.value === "" ? "" : Number(e.target.value))}
           required
+        />
+      </div>
+      <div className="grid gap-2">
+        <Label htmlFor="description">Description</Label>
+        <Input
+          id="description"
+          value={descriiption}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="A short description of the product"
         />
       </div>
       <div className="grid gap-2">
